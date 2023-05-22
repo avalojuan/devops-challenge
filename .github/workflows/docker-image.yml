@@ -17,8 +17,6 @@ jobs:
     
     steps:
     - uses: actions/checkout@v3
-      with:
-        context: ./prueba-3
     
     - name: Login to DockerHub              
       run: |
@@ -27,7 +25,7 @@ jobs:
     - name: Build the Docker image
       
       run: |
-        docker build -t $DOCKER_USER/$DOCKER_REPOSITORY:$IMAGE_TAG .
+        docker build ./prueba-3 -t $DOCKER_USER/$DOCKER_REPOSITORY:$IMAGE_TAG .
         docker push $DOCKER_USER/$DOCKER_REPOSITORY:$IMAGE_TAG
         
   deploy:
