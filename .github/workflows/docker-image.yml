@@ -23,9 +23,10 @@ jobs:
         docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
       
     - name: Build the Docker image
+      working-directory: prueba-3
       
       run: |
-        docker build ./prueba-3 -t $DOCKER_USER/$DOCKER_REPOSITORY:$IMAGE_TAG .
+        docker build -t $DOCKER_USER/$DOCKER_REPOSITORY:$IMAGE_TAG .
         docker push $DOCKER_USER/$DOCKER_REPOSITORY:$IMAGE_TAG
         
   deploy:
