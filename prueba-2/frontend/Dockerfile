@@ -15,8 +15,16 @@ COPY . .
 # Se realiza el build utilizando el script del package.json
 RUN npm run build
 
-# Exponemos el puerto a utilizar con la app
+# Utilizamos la imagen de nginx para servir los archivos estaticos creados
+# en la fase anterior
+FROM nginx
+
+# Exponemos el puerto 3000 que utiliza nuestra app
 EXPOSE 3000
 
-# Ejecutamos el script descripto en el package.json para iniciar la app
-CMD ["npm", "start"]
+# Copiamos el archivo de configuracion de nginx
+COPY ./nginx/default.conf /etc/nginx/conf.d/default.conf
+
+# Copiamos los archivos estaticos creado en la fase anterior
+# al directorio que especifica la documentacion de nginx
+COPY --from=builder /app/assets/bundles /usr/share/nginx/html
