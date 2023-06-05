@@ -77,6 +77,9 @@ Los mismos se ejecutaron con Docker engine en ubuntu 22.04.
 
    - Se creó el `Dockerfile` para el frontend, que incluye la instalación de las dependencias y la compilación del código de React.js.
    - Se decidió utilizar la versión 14 de Node, considerando la versión de React (16) utilizada en el proyecto y para evitar posibles incompatibilidades de dependencias con versiones más recientes.
+   - En primera instancia se ejecutaba el codigo utilizando el comando `npm run start`, lo cual no es óptimo ya que no hace uso de los archivos estáticos generados con webpack, y la imagen resultante superaba los 500MB.
+   - Se modificó el `Dockerfile` para realizar el build de los archivos estáticos con webpack en un primer stage, y luego copiar y servir estos archivos con nginx. Para lo cual se debió modificar la configuración de webpack, en específico `paths.js` y `webpack.config.prod.js` para corregir las rutas donde se almacenaban finalmente los archivos resultantes de `npm run build`.
+   - Gracias a esta modificación la imagen final ronda los 160MB.
 
 2. Backend:
 
